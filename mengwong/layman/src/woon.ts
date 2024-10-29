@@ -44,6 +44,7 @@ export class Vine { // your basic tree, with AnyAll leaves, and Leaf/Fill termin
   constructor(
     public viz  ?: HideShow,
     public   id ?: number,
+    public className?: string,
   ) {
     this.id = id ?? idMax++;
   }
@@ -70,14 +71,16 @@ export class Vine { // your basic tree, with AnyAll leaves, and Leaf/Fill termin
   isFullyExpanded() : boolean { return this.viz === HideShow.Expanded }
 }
 
-
 export class AnyAll extends Vine {
   constructor(
     public c : Vine[],
     viz ?: HideShow,
-    id  ?: number) {
+    id  ?: number,
+  ) {
     super(viz, id);
-    for (const child of c) { child.recordParent(this) }
+    for (const child of c) {
+      child.recordParent(this)
+    }
   }
   expand(exOpts : ExpansionOpts) : Vine[][] {
     // console.log(`* ${this.id} expand() starting`, this);
@@ -125,9 +128,13 @@ export class All extends AnyAll {
       // we calculate the latest x position as the maximum of the children's x positions and their width.
       // the y position for a new child is always 0 because we are stacking the children horizontally.
       // we pass these as the position argument to the next child.
-       const maxX = Math.max(...childFlowNodes.map(node => node.position.x + (node.style?.width as number) ?? 0), 0) // thanks, JS, max [] gives -Infinity wtf
+      //  const maxX = Math.max(...childFlowNodes.map(node => node.position.x + (node.style?.width as number) ?? 0), 0) // thanks, JS, max [] gives -Infinity wtf
+      // wrap 'as number' in ()
+      // so when node.style?.width is undefined, we use 0. otherwise it becomes undefined and never becomes 0
+       const maxX = Math.max(...childFlowNodes.map(node => (node.position.x + ((node.style?.width as number) ?? 0))), 0)
+
        const childNode = x.getFlowNodes({ x: maxX + xMargin, y: yMargin}, `${this.id}-group`); // bounding box left margin
-       childFlowNodes.push(...childNode);
+       childFlowNodes.push(...childNode)
     })
 
     console.log(`** All ${this.id} getFlowNodes done constructing childFlowNodes`, childFlowNodes);
@@ -220,8 +227,8 @@ export class Any extends AnyAll {
       // we calculate the latest y position as the maximum of the children's y positions and their height
       // the x position for a new child is always 0 (well, 20, for a left margin) because we are stacking the children vertically.
       // we pass these as the position argument to the next child.
-       const maxY = Math.max(...childFlowNodes.map(node => node.position.y + (node.style?.height as number) ?? 0), 0)
-       const childNode = x.getFlowNodes({ x: 0, y: maxY + 20}, `${this.id}-group`); // x=20, bounding box left margin
+      const maxY = Math.max(...childFlowNodes.map(node => node.position.y + ((node.style?.height as number) ?? 0)), 0)
+      const childNode = x.getFlowNodes({ x: 0, y: maxY + 20}, `${this.id}-group`); // x=20, bounding box left margin
        childFlowNodes.push(...childNode);
        console.log(`*** Any child: `, childNode)
     })
@@ -300,11 +307,13 @@ export class Leaf extends Vine {
     id   ?: number,
   ) { super(viz,id) }
   getFlowNodes(relPos:XYPosition, parentId ?: string) : Node[] {
-    console.log(`** Leaf ${this.id} getFlowNodes ${JSON.stringify(relPos)}`, this);
+    console.log(`** Leaf ${this.id} getFlowNodes ${JSON.stringify(relPos)}`, this)
     const node : Node = {
       id: `${this.id}`,
       type: 'default',
-      data: { label: this.text },
+      data: {
+        label: this.text,
+      },
       position: relPos,
       sourcePosition: Position.Right, targetPosition: Position.Left,
       style: {
@@ -313,9 +322,11 @@ export class Leaf extends Vine {
       backgroundColor: this.value == undefined ? "white" : this.value ? "green" : "red"
       }
     }
+    
     if (parentId !== undefined) { node.parentId = parentId }
     return [ node ]
   }
+
   clone() { return new Leaf(this.text, this.value, this.dflt, this.viz, this.id) }
 }
 
@@ -324,7 +335,7 @@ export class Fill extends Vine {
   constructor(
     public fill     : string,
     viz  ?: HideShow,
-    id      ?: number
+    id      ?: number,
   ) { super(viz,id) }
   getFlowNodes(relPos:XYPosition, parentId ?: string) : Node[] {
     console.log(`** Fill ${this.id} getFlowNodes ${JSON.stringify(relPos)}`, this);
@@ -406,8 +417,11 @@ export class Not extends Vine {
         id: `${this.id}-out`,
         type: 'default',
         data: { label: `not` },
-        position: { x: Number(childFlowNodes[0].style?.width) || 99, y: (Number(childFlowNodes[0].style?.height) ?? 99) / 2 - 10 },
-        sourcePosition: Position.Right, targetPosition: Position.Left,
+        // use ?? instead of || so fallback is used when null/undefined
+        position: {
+          x: Number(childFlowNodes[0].style?.width ?? 99),
+          y: (Number(childFlowNodes[0].style?.height ?? 99) / 2) - 10
+        },        sourcePosition: Position.Right, targetPosition: Position.Left,
         style: {
           width: 5,
           height: 5,
@@ -701,3 +715,138 @@ const with_a_bit_less_unnecessary_ink_on_the_screen =
       OR  (colonies) => settled in the qualifying territory in which the person is born
 
 `
+
+
+export const title_covered_1_2 =
+  any(
+    all(
+        ele('the Title being vested other than as stated in Schedule A'),
+    ),
+    say('or'),
+    any(
+      all(
+	  ele('any defect in'),
+	  any(
+	      ele('lien'),
+	      say('or'),
+	      ele('encumbrance on the title')
+	  )
+      ),
+      say('or'),
+      all(
+	  ele('a defect in the Title caused by'),
+	  any(
+	      ele('forgery'),
+	      say('or'),
+	      ele('fraud'),
+	      say('or'),
+	      ele('undue influence'),
+	      say('or'),
+	      ele('duress'),
+	      say('or'),
+	      ele('incompetency'),
+	      say('or'),
+	      ele('incapacity'),
+	      say('or'),
+	      ele('impersonation')
+	  )
+      ),
+      say('or'),
+      all(say('the failure of a',
+	      any(
+		ele('person'),
+		say('or'),
+		ele('entity')),
+	      say('to have authorized a'),
+	      any(ele('transfer'),
+		  say('or'),
+		  ele('conveyance')
+		 ))),
+      any(
+	say('a document affecting the Title not properly'),
+	ele('authorized'),
+	say('or'),
+	ele('created'),
+	say('or'),
+	ele('executed'),
+	say('or'),
+	ele('witnessed'),
+	say('or'),
+	ele('sealed'),
+	say('or'),
+	ele('acknowledged'),
+	say('or'),
+	ele('notarized'),
+	say('or'),
+	ele('notarized by remote online notarization'),
+	say('or'),
+	ele('delivered')
+      ),
+    
+      ele('a failure to perform those acts necessary to create a document by electronic means authorized by law'),
+
+      all(
+	say('a document executed under a'),
+	any(ele('falsified'),
+	    ele('expired'),
+	    say('or'),
+	    ele('otherwise invalid')),
+	say(' power of attorney')
+      ),
+      say('or'),
+
+      any(
+	all(
+	  say('a document not properly'),
+	  any(
+	    ele('filed'),
+	    ele('recorded'),
+	    say('or'),
+	    ele('indexed')
+	  )
+	),
+	say('or'),
+	
+	ele('the failure to have performed those acts by electronic means authorized by law')
+      ),
+
+      any(
+	ele('a defective judicial proceeding'),
+	say('or'),
+	ele('administrative proceeding')
+      ),
+
+      say('or'),
+
+      ele('the repudiation of an electronic signature by a person who executed a document because the electronic signature on the document was not valid under applicable electronic transactions law')
+    ),
+    say('or'),
+    any(
+        ele('the lien of real estate taxes'),
+        say('or'),
+        ele('assessments imposed on the Title by a governmental authority due or payable but unpaid')
+    ),
+    say('or'),
+    all(
+      any(
+	ele('an encumbrance'),
+	ele('violation'),
+	say('or'),
+	ele('variation'),
+	say('or'),
+	ele('adverse circumstance'),
+	say('or'),
+	ele('boundary line overlap'),
+	say('or'),
+	ele('encroachment'),
+	say('or'),
+	ele('encroachment of an improvement across the boundary lines of the Land')
+      ),
+      say('if'),
+      ele('the Aforesaid would have been disclosed by an accurate and complete land title survey of the Land')
+    )
+  )
+
+
+
+    
