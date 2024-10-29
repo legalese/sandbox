@@ -151,3 +151,15 @@ em {
   height: auto;
   resize: both;
 }
+
+.highlight {
+  background-color: lime !important;
+}
+
+.light-highlight {
+  background-color: rgb(189, 255, 189) !important;
+}
+
+.nopath-highlight {
+  background-color: red !important;
+}
