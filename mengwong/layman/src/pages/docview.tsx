@@ -33,7 +33,7 @@ export const DocView: React.FC<Props> = ({ doc }) => {
   const clickedNodesRef = useRef<Set<string>>(new Set())
   const handleClickedNodes = useCallback((newHighlightedNodeIds: Set<string>) => {
     setHighlightedNodeIds(newHighlightedNodeIds)
-    clickedNodesRef = newHighlightedNodeIds
+    clickedNodesRef.current = newHighlightedNodeIds
   }, [])
 
   React.useEffect(() => {
