@@ -155,7 +155,8 @@ export class All extends AnyAll {
         height: bboxHeight,
         border: 'none',
       },
-       parentId: parentId
+       parentId: parentId,
+       selectable: false
       },
       { // IN: a pseudo-node which is basically a tiny little circle which acts as a lead-in to the children in the group
         id: `${this.id}-in`,
@@ -250,7 +251,8 @@ export class Any extends AnyAll {
         height: bboxHeight,
         border: 'none',
       },
-       parentId: parentId
+       parentId: parentId,
+       selectable: false
       },
       { // IN: a pseudo-node which is basically a tiny little circle which acts as a lead-in to the children in the group
         id: `${this.id}-in`,
@@ -399,6 +401,7 @@ export class Not extends Vine {
         height: childFlowNodes[0].style?.height || 99 + yMargin,
        },
        sourcePosition: Position.Right, targetPosition: Position.Left,
+       selectable: false
       },
       { // IN
         id: `${this.id}-in`,
