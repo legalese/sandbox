@@ -105,7 +105,7 @@ const families = (root: Vine): (string | undefined)[][] => {
   )
 }
 
-export const Flow: React.FC<Props> = ({root, nodes, edges, dispatch, onNodeClick, onNodesChange, clickedNodes }) => {
+export const Flow: React.FC<Props> = ({root, nodes, edges, onNodeClick, onNodesChange, clickedNodes }) => {
   const [reactFlowNodes, setReactFlowNodes] = useNodesState(nodes)
   const [flowEdges, setFlowEdges] = useEdgesState(edges)
   const disj = useMemo(() => families(root), [root])
@@ -126,6 +126,9 @@ export const Flow: React.FC<Props> = ({root, nodes, edges, dispatch, onNodeClick
 
   const handleNodeClick = useCallback(
     (event: React.MouseEvent, node: Node) => {
+      if (node.type === 'group') {
+        return
+      }
       const checkArrayExists = (disj: (string | undefined)[][], clicked: string[]): boolean => {
         return disj.some((arr: (string | undefined)[]) => {
           return clicked.every((id: string) => arr.includes(id))
