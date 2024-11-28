@@ -1,0 +1,19 @@
+{
+  "name": "jules-ld-test",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "start": "http-server . -o"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ladder-diagram": "^2.0.3"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "jsdoc": "^4.0.4"
+  }
+}
