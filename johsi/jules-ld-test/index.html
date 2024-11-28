@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jules' Ladder Diagram Test</title>
+    <link rel="stylesheet" href="./node_modules/ladder-diagram/css/ladder.css">
+</head>
+<body>
+    <!-- 
+        Diagram will be generated as a child of this DOM element.
+        The diagram scales with the font-size 
+        -->
+<div id="test" style="font-size:1.5em;"></div>
+        
+<script type="module">
+    
+// Path to the main js file
+import { 
+    BoolVar, AllQuantifier, AnyQuantifier, LadderDiagram 
+} from "./node_modules/ladder-diagram/js/ladder.js"
+
+
+let circuit = new AllQuantifier([
+    new BoolVar("walk", false, null, 'T'),
+    new AnyQuantifier([
+        new BoolVar("swim", true, 'F', 'F'),
+        new BoolVar("sink", true),
+    ]),
+    new AnyQuantifier([
+        new BoolVar("eat", false, null, 'F'),
+        new AnyQuantifier([
+            new BoolVar("alcoholic", false, null, 'T'),
+            new BoolVar("non-alcoholic", false, 'F')
+        ],
+        "drink")
+    ])
+])
+
+// from Jules' ladder-diagram readme, which likely has not been updated
+// window.diagram = new LadderDiagram(
+    //     document.getElementById("test"),
+    //     circuit,
+    //     "Corners" // Box styling
+    // )
+
+    new LadderDiagram(circuit).attach(document.getElementById("test"));
+
+</script>
+</body>
+</html>
