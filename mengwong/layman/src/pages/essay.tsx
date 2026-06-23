@@ -1,6 +1,11 @@
 /* eslint-disable react/no-unescaped-entities */
 
-import React, { useState } from 'react';
+import React from 'react';
+import fs from 'fs';
+import path from 'path';
+import type { GetStaticProps } from 'next';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 export const EssayContent1: React.FC = () => {
   return (<div>
@@ -169,5 +174,24 @@ export const EssayContent1: React.FC = () => {
   )
 }
 
-export default EssayContent1
+// ---------------------------------------------------------------------------
+// /essay route — renders the current essay from essay.md (GitHub-flavored
+// markdown), read from disk at build time. EssayContent1 (above) is the older
+// hand-coded draft still embedded by index.tsx.
+// ---------------------------------------------------------------------------
+
+export const getStaticProps: GetStaticProps<{ content: string }> = async () => {
+  const content = fs.readFileSync(path.join(process.cwd(), 'essay.md'), 'utf8');
+  return { props: { content } };
+};
+
+const EssayPage: React.FC<{ content: string }> = ({ content }) => (
+  <main className="mx-auto max-w-3xl px-6 py-12">
+    <article className="prose prose-slate lg:prose-lg max-w-none prose-pre:overflow-x-auto prose-pre:bg-slate-900 prose-pre:text-slate-100">
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+    </article>
+  </main>
+);
+
+export default EssayPage;
 
