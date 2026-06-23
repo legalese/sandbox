@@ -40,9 +40,13 @@ A formula has more than one face. You can write it as **algebra**: `Sunday + Hol
 
 Every formula can be drawn; every such picture can be written; both can be spoken. They are one object in three costumes — what a mathematician calls **isomorphic**.
 
+That a formula and a circuit are the same object is no throwaway — it is a celebrated unification in its own right. In 1937 a twenty-one-year-old named Claude Shannon, in what is often called the most consequential master's thesis ever written, showed that the algebra of *and / or / not* is exactly the algebra of relays and switches: logic and circuitry are one thing. The relay "ladder" this essay draws later is his. (Shannon went on to found information theory; the better part of a century later, he lent his given name to an entire AI.) Keep that move in mind — taking two things long held apart and showing they are one — because it is the only move this essay makes.
+
 What else is isomorphic to formulas and pictures?
 
 Law.
+
+This is not a new thought, and the credit is precise. The law-to-logic half of the bridge was built in 1957 by Layman E. Allen — a law professor at Yale and later Michigan who, two years on, founded the discipline of *jurimetrics* and its journal under the American Bar Association — in a paper with the wonderful title *Symbolic Logic: A Razor-Edged Tool for Drafting and Interpreting Legal Documents*. A statute, Allen argued, has a logical skeleton — an arrangement of *and*, *or*, and *not* — and most legal ambiguity is not deep disagreement but mere sloppiness about that skeleton. He spent a career on it: "normalized" legal drafting, deontic logic for obligations and permissions, even a logic game, WFF 'N PROOF, to drill the structure into law students. Compose Allen's half-bridge with Shannon's, and a statute becomes a circuit.
 
 Wrangle a law into Boolean logic and you can do new things — make predictions; predict whether a judge will buy an argument, or send someone to jail. The rest of this essay makes good on that claim, with a real case the Singapore Court of Appeal decided in 2022. It is a case about cheating. It will turn out to be a case about dead code.
 
@@ -61,6 +65,34 @@ Everything turned on one certified question (*Poh Yuan Nie v Public Prosecutor* 
 To see why a nation's highest court spent a judgment on the gap between an adjective and an adverb, read the statute as a programmer would: as code.
 
 ## The statute as code
+
+Here is s 415 in full — one sentence, a hundred words, a single unbroken legal breath:
+
+> Whoever, by deceiving any person, whether or not such deception was the sole or main inducement, fraudulently or dishonestly induces the person so deceived to deliver or cause the delivery of any property to any person, or to consent that any person shall retain any property, or intentionally induces the person so deceived to do or omit to do anything which he would not do or omit to do if he were not so deceived, and which act or omission causes or is likely to cause damage or harm to any person in body, mind, reputation or property, is said to “cheat”.
+
+Reindented the way a modern drafter — or a programmer — would lay it out, its skeleton shows through (the **bold** terms are the operative atoms the code will turn into Booleans):
+
+Whoever,  
+&nbsp;&nbsp;&nbsp;&nbsp;(a) by **deceiving** any person,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(i) whether or not such deception was the sole or main inducement,  
+&nbsp;&nbsp;&nbsp;&nbsp;(b) **fraudulently or dishonestly** induces the person so deceived to  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(i) deliver or  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(ii) cause the delivery of  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(iii) any **property** to any person, or  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(iv) to consent that any person shall retain any property, **or**  
+&nbsp;&nbsp;&nbsp;&nbsp;(c) **intentionally** induces the person so deceived to  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(i) **do** or  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(ii) omit to do  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(iii) anything which he would not do or omit to do if he were not so deceived, and  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(iv) which **act** or omission  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(A) **causes** or  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(B) is likely to cause  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(v) **damage or harm** to any person in  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(A) body,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(B) mind,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(C) reputation or  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(D) property,  
+is said to “**cheat**”.
 
 The Court broke s 415 into **two alternative limbs** ([6]):
 
@@ -204,7 +236,7 @@ So the slogan is not "logic decides law." It is: **a Boolean argument is a contr
 
 In the 1860s, James Clerk Maxwell took two sprawling bodies of experimental law — everything known about electricity, and everything known about magnetism — and showed they were one. A handful of equations unified them into a single **electromagnetic field**, and the unification *predicted* what nobody had put in: that light is an electromagnetic wave, moving at a speed the equations let you compute. Unify the right two things and the seam between them becomes one fabric — and the fabric tells you things the pieces never could.
 
-This essay has argued, on a small scale, that **law and computer science are two such bodies waiting to be unified** — and that the unification is not metaphor but literal correspondence:
+We have already met this move at the small end of the scale — Shannon joining logic to circuitry, Allen joining law to logic — and in Maxwell it is made grand. The bridge from law to a running machine, in other words, was begun long ago. What this essay adds is that it can now be walked end to end and *checked* — that **the correspondence is not metaphor but literal**:
 
 | In the courtroom | In the machine |
 |---|---|
@@ -220,6 +252,10 @@ This essay has argued, on a small scale, that **law and computer science are two
 Read either column straight down and you have a coherent account of *Poh Yuan Nie*. The claim is that this is not a coincidence of vocabularies but one structure — the same logic, dressed once in robes and once in syntax. A surprising share of the canons lawyers learn as craft are theorems about Boolean functions; where they are, a machine can carry them, and a solver can prove they were carried correctly.
 
 L4 is the notation for that unified field, as Maxwell's equations were for his — not to put judges out of work, any more than electromagnetism unemployed electricians, but to give lawyers what programmers have had for decades. We began with a humble trick — one for true, zero for false — and rode it to the Court of Appeal. That is the wager of computational law: that the letter and the spirit are not enemies but the object and the property, the model and the theorem — and that with the right language we can hold both in one hand.
+
+## Coda
+
+The tool that draws the ladder diagrams in this essay is named **Layman** — a double honour: for the layman it hopes to put the law within reach of, and for Layman E. Allen, who discerned the logical skeleton of a statute a lifetime before there was a machine to run it. Before he was a law professor he had been a US Navy electronics technician — circuits before statutes. There is a small justice in the circuits finding their way back to the statutes at last, and in these diagrams closing that loop under his name.
 
 ---
 
