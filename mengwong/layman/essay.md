@@ -1,3 +1,8 @@
+<!-- DEPRECATED / ARCHIVABLE: canonical copy moved to legalese/l4-ide (branch unstable)
+     at paper/formal-methods-in-law/the-letter-and-the-spirit/, pending a PR. Do not edit here. -->
+
+> **⚠️ Deprecated — archival copy.** The maintained source of this essay now lives in the **`legalese/l4-ide`** repository (branch `unstable`) at **`paper/formal-methods-in-law/the-letter-and-the-spirit/`**, pending a PR. Please make edits there; this copy is retained for history only and should not be updated.
+
 # The Letter and the Spirit
 
 *How an exam-cheating case became a proof — and what that tells us about unifying law and computer science.*
